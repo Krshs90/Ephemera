@@ -1,0 +1,43 @@
+{
+  "name": "ephemera",
+  "version": "1.0.0",
+  "description": "Generative decay art — stillness decays, movement restores.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder"
+  },
+  "keywords": [
+    "generative-art",
+    "webcam",
+    "decay",
+    "electron"
+  ],
+  "author": "Ephemera",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^30.0.0",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "com.ephemera.decayart",
+    "productName": "Ephemera",
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icon.ico"
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "assets/icon.icns"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "renderer/**/*",
+      "assets/**/*"
+    ]
+  },
+  "allowScripts": {
+    "electron@30.5.1": true
+  }
+}

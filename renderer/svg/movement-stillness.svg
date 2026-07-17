@@ -1,0 +1,240 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 200" role="img" aria-label="Left side shows movement restoring clarity, right side shows stillness causing decay">
+
+  <style>
+    .lbl {
+      font-family: 'Archivo Narrow', 'Arial Narrow', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-anchor: middle;
+    }
+    .sub {
+      font-family: 'Azeret Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      text-anchor: middle;
+      fill: #58554f;
+    }
+    .caption {
+      font-family: 'Azeret Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.08em;
+      text-anchor: middle;
+    }
+
+    /* motion figure — ghost trails slide in from right */
+    .trail1 { animation: slide1 1.8s ease-in-out infinite; opacity: 0.18; }
+    .trail2 { animation: slide2 1.8s ease-in-out infinite; opacity: 0.11; }
+    @keyframes slide1 {
+      0%,100% { transform: translateX(0px); }
+      50%      { transform: translateX(-6px); }
+    }
+    @keyframes slide2 {
+      0%,100% { transform: translateX(0px); }
+      50%      { transform: translateX(-12px); }
+    }
+
+    /* Noise animation for right panel */
+    .n1 { animation: nf1 0.12s steps(1) infinite; }
+    .n2 { animation: nf2 0.18s steps(1) infinite; }
+    .n3 { animation: nf3 0.25s steps(1) infinite; }
+    @keyframes nf1 {
+      0%  { fill: #28261f; } 30% { fill: #3e3c39; } 60% { fill: #1e1c18; } 100% { fill: #28261f; }
+    }
+    @keyframes nf2 {
+      0%  { fill: #3e3c39; } 40% { fill: #1a1816; } 70% { fill: #4e4b47; } 100% { fill: #3e3c39; }
+    }
+    @keyframes nf3 {
+      0%  { fill: #1c1a16; } 50% { fill: #4a4744; } 100% { fill: #1c1a16; }
+    }
+
+    /* right-panel ghost person — flickers faintly */
+    .ghost-cell {
+      animation: ghostpulse 3s ease-in-out infinite alternate;
+    }
+    @keyframes ghostpulse {
+      from { fill: #3a2510; opacity: 0.4; }
+      to   { fill: #18100a; opacity: 0.15; }
+    }
+
+    /* motion speed lines */
+    .motion-line { animation: motionFade 1.8s ease-in-out infinite; }
+    .motion-line:nth-child(2) { animation-delay: 0.2s; }
+    .motion-line:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes motionFade {
+      0%,100% { opacity: 0.15; }
+      50%      { opacity: 0.55; }
+    }
+
+    /* decay bar grows */
+    .decay-bar-fill {
+      animation: barGrow 2.5s ease-in-out infinite alternate;
+    }
+    @keyframes barGrow {
+      from { width: 4px; }
+      to   { width: 56px; }
+    }
+  </style>
+
+  <!-- ═══════════════════════
+       DIVIDER
+  ═══════════════════════ -->
+  <line x1="280" y1="0" x2="280" y2="200" stroke="#2a2825" stroke-width="1" stroke-dasharray="4 4"/>
+
+  <!-- ══════════════════════════════
+       LEFT HALF — MOVEMENT (0-280)
+  ══════════════════════════════ -->
+
+  <!-- Section label -->
+  <text x="140" y="22" class="lbl" fill="#8a5a28">MOVEMENT</text>
+  <text x="140" y="35" class="sub">clarity restores</text>
+
+  <!-- Pixel grid background: 7 cols × 6 rows, cell 16×16 step 18 -->
+  <!-- Start x=20, y=48 -->
+  <!-- Person shape: rows 1-4, cols 2-4 -->
+
+  <!-- BG cells (left panel) — dark, fixed -->
+  <rect x="20"  y="48"  width="16" height="16" fill="#1d1912"/>
+  <rect x="38"  y="48"  width="16" height="16" fill="#1d1912"/>
+  <rect x="56"  y="48"  width="16" height="16" fill="#1d1912"/>
+  <rect x="74"  y="48"  width="16" height="16" fill="#1d1912"/>
+  <rect x="92"  y="48"  width="16" height="16" fill="#1d1912"/>
+  <rect x="110" y="48"  width="16" height="16" fill="#1d1912"/>
+  <rect x="128" y="48"  width="16" height="16" fill="#1d1912"/>
+
+  <rect x="20"  y="66"  width="16" height="16" fill="#1d1912"/>
+  <rect x="38"  y="66"  width="16" height="16" fill="#1d1912"/>
+  <rect x="56"  y="66"  width="16" height="16" fill="#6a4520"/> <!-- person -->
+  <rect x="74"  y="66"  width="16" height="16" fill="#8a5a28"/> <!-- person -->
+  <rect x="92"  y="66"  width="16" height="16" fill="#6a4520"/> <!-- person -->
+  <rect x="110" y="66"  width="16" height="16" fill="#1d1912"/>
+  <rect x="128" y="66"  width="16" height="16" fill="#1d1912"/>
+
+  <rect x="20"  y="84"  width="16" height="16" fill="#1d1912"/>
+  <rect x="38"  y="84"  width="16" height="16" fill="#6a4520"/> <!-- person -->
+  <rect x="56"  y="84"  width="16" height="16" fill="#8a5a28"/> <!-- person -->
+  <rect x="74"  y="84"  width="16" height="16" fill="#c08840"/> <!-- person bright -->
+  <rect x="92"  y="84"  width="16" height="16" fill="#8a5a28"/> <!-- person -->
+  <rect x="110" y="84"  width="16" height="16" fill="#6a4520"/> <!-- person -->
+  <rect x="128" y="84"  width="16" height="16" fill="#1d1912"/>
+
+  <rect x="20"  y="102" width="16" height="16" fill="#1d1912"/>
+  <rect x="38"  y="102" width="16" height="16" fill="#6a4520"/>
+  <rect x="56"  y="102" width="16" height="16" fill="#8a5a28"/>
+  <rect x="74"  y="102" width="16" height="16" fill="#8a5a28"/>
+  <rect x="92"  y="102" width="16" height="16" fill="#8a5a28"/>
+  <rect x="110" y="102" width="16" height="16" fill="#6a4520"/>
+  <rect x="128" y="102" width="16" height="16" fill="#1d1912"/>
+
+  <rect x="20"  y="120" width="16" height="16" fill="#1d1912"/>
+  <rect x="38"  y="120" width="16" height="16" fill="#1d1912"/>
+  <rect x="56"  y="120" width="16" height="16" fill="#4a3218"/>
+  <rect x="74"  y="120" width="16" height="16" fill="#4a3218"/>
+  <rect x="92"  y="120" width="16" height="16" fill="#4a3218"/>
+  <rect x="110" y="120" width="16" height="16" fill="#1d1912"/>
+  <rect x="128" y="120" width="16" height="16" fill="#1d1912"/>
+
+  <rect x="20"  y="138" width="16" height="16" fill="#1d1912"/>
+  <rect x="38"  y="138" width="16" height="16" fill="#1d1912"/>
+  <rect x="56"  y="138" width="16" height="16" fill="#1d1912"/>
+  <rect x="74"  y="138" width="16" height="16" fill="#1d1912"/>
+  <rect x="92"  y="138" width="16" height="16" fill="#1d1912"/>
+  <rect x="110" y="138" width="16" height="16" fill="#1d1912"/>
+  <rect x="128" y="138" width="16" height="16" fill="#1d1912"/>
+
+  <!-- Motion ghost trail 1 (offset left) -->
+  <g class="trail1">
+    <rect x="34"  y="66"  width="16" height="16" fill="#8a5a28"/>
+    <rect x="52"  y="84"  width="16" height="16" fill="#c08840"/>
+    <rect x="34"  y="102" width="16" height="16" fill="#8a5a28"/>
+  </g>
+  <!-- Motion ghost trail 2 (more offset) -->
+  <g class="trail2">
+    <rect x="28"  y="84"  width="16" height="16" fill="#c08840"/>
+    <rect x="28"  y="102" width="16" height="16" fill="#8a5a28"/>
+  </g>
+
+  <!-- Motion speed lines (horizontal) -->
+  <g>
+    <line x1="155" y1="80"  x2="175" y2="80"  stroke="#6a4520" stroke-width="1.5" class="motion-line" stroke-linecap="round"/>
+    <line x1="158" y1="90"  x2="180" y2="90"  stroke="#8a5a28" stroke-width="2"   class="motion-line" stroke-linecap="round"/>
+    <line x1="155" y1="100" x2="175" y2="100" stroke="#6a4520" stroke-width="1.5" class="motion-line" stroke-linecap="round"/>
+    <line x1="160" y1="110" x2="178" y2="110" stroke="#4a3218" stroke-width="1"   class="motion-line" stroke-linecap="round"/>
+  </g>
+
+  <!-- "↑ clarity" indicator -->
+  <text x="140" y="173" class="caption" fill="#6a4520">↑ regions refresh</text>
+
+  <!-- ══════════════════════════════
+       RIGHT HALF — STILLNESS (280-560)
+  ══════════════════════════════ -->
+
+  <!-- Section label -->
+  <text x="420" y="22" class="lbl" fill="#4e4845">STILLNESS</text>
+  <text x="420" y="35" class="sub">decay spreads</text>
+
+  <!-- Fully decayed grid -->
+  <!-- Row 0 — all noise -->
+  <rect x="310" y="48"  width="16" height="16" class="n1"/>
+  <rect x="328" y="48"  width="16" height="16" class="n2"/>
+  <rect x="346" y="48"  width="16" height="16" class="n3"/>
+  <rect x="364" y="48"  width="16" height="16" class="n1"/>
+  <rect x="382" y="48"  width="16" height="16" class="n2"/>
+  <rect x="400" y="48"  width="16" height="16" class="n3"/>
+  <rect x="418" y="48"  width="16" height="16" class="n1"/>
+
+  <!-- Row 1 -->
+  <rect x="310" y="66"  width="16" height="16" class="n2"/>
+  <rect x="328" y="66"  width="16" height="16" class="n3"/>
+  <rect x="346" y="66"  width="16" height="16" class="ghost-cell"/>
+  <rect x="364" y="66"  width="16" height="16" class="ghost-cell"/>
+  <rect x="382" y="66"  width="16" height="16" class="ghost-cell"/>
+  <rect x="400" y="66"  width="16" height="16" class="n1"/>
+  <rect x="418" y="66"  width="16" height="16" class="n2"/>
+
+  <!-- Row 2 -->
+  <rect x="310" y="84"  width="16" height="16" class="n3"/>
+  <rect x="328" y="84"  width="16" height="16" class="ghost-cell"/>
+  <rect x="346" y="84"  width="16" height="16" class="ghost-cell"/>
+  <rect x="364" y="84"  width="16" height="16" class="ghost-cell"/>
+  <rect x="382" y="84"  width="16" height="16" class="ghost-cell"/>
+  <rect x="400" y="84"  width="16" height="16" class="ghost-cell"/>
+  <rect x="418" y="84"  width="16" height="16" class="n1"/>
+
+  <!-- Row 3 -->
+  <rect x="310" y="102" width="16" height="16" class="n2"/>
+  <rect x="328" y="102" width="16" height="16" class="ghost-cell"/>
+  <rect x="346" y="102" width="16" height="16" class="ghost-cell"/>
+  <rect x="364" y="102" width="16" height="16" class="ghost-cell"/>
+  <rect x="382" y="102" width="16" height="16" class="ghost-cell"/>
+  <rect x="400" y="102" width="16" height="16" class="ghost-cell"/>
+  <rect x="418" y="102" width="16" height="16" class="n3"/>
+
+  <!-- Row 4 -->
+  <rect x="310" y="120" width="16" height="16" class="n1"/>
+  <rect x="328" y="120" width="16" height="16" class="n3"/>
+  <rect x="346" y="120" width="16" height="16" class="ghost-cell"/>
+  <rect x="364" y="120" width="16" height="16" class="ghost-cell"/>
+  <rect x="382" y="120" width="16" height="16" class="ghost-cell"/>
+  <rect x="400" y="120" width="16" height="16" class="n2"/>
+  <rect x="418" y="120" width="16" height="16" class="n1"/>
+
+  <!-- Row 5 — all noise -->
+  <rect x="310" y="138" width="16" height="16" class="n2"/>
+  <rect x="328" y="138" width="16" height="16" class="n1"/>
+  <rect x="346" y="138" width="16" height="16" class="n3"/>
+  <rect x="364" y="138" width="16" height="16" class="n2"/>
+  <rect x="382" y="138" width="16" height="16" class="n1"/>
+  <rect x="400" y="138" width="16" height="16" class="n3"/>
+  <rect x="418" y="138" width="16" height="16" class="n2"/>
+
+  <!-- Decay timer bar (grows over time) -->
+  <rect x="442" y="68" width="64" height="6" rx="3" fill="#28261f"/>
+  <rect x="442" y="68" height="6" rx="3" fill="#6a4520" class="decay-bar-fill"/>
+  <text x="474" y="60" class="caption" fill="#4e4845">DECAYING</text>
+  <text x="474" y="83" class="caption" fill="#3a3835">stillness timer</text>
+
+  <!-- "↓ decay" indicator -->
+  <text x="420" y="173" class="caption" fill="#4e4845">↓ regions dissolve</text>
+
+</svg>

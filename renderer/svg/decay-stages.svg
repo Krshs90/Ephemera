@@ -1,0 +1,239 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 155" role="img" aria-label="Diagram showing three stages: Fresh pixel grid, Decaying grid with noise, Dissolved grid of static">
+
+  <style>
+    .lbl {
+      font-family: 'Archivo Narrow', 'Arial Narrow', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      fill: #6a6560;
+      text-anchor: middle;
+    }
+    .sub-lbl {
+      font-family: 'Azeret Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.08em;
+      fill: #45423f;
+      text-anchor: middle;
+    }
+    .arr { fill: #3a3733; }
+
+    /* Noise flicker animations — three offsets so cells don't all sync */
+    .n1 { animation: nf1 0.11s steps(1) infinite; }
+    .n2 { animation: nf2 0.17s steps(1) infinite; }
+    .n3 { animation: nf3 0.23s steps(1) infinite; }
+
+    @keyframes nf1 {
+      0%   { fill: #28261f; }
+      30%  { fill: #3e3c39; }
+      60%  { fill: #201e1a; }
+      100% { fill: #28261f; }
+    }
+    @keyframes nf2 {
+      0%   { fill: #3e3c39; }
+      40%  { fill: #1e1c18; }
+      70%  { fill: #4e4b47; }
+      100% { fill: #3e3c39; }
+    }
+    @keyframes nf3 {
+      0%   { fill: #1e1c18; }
+      50%  { fill: #4e4b47; }
+      100% { fill: #1e1c18; }
+    }
+
+    /* Ghost cells: colour bleeds between two dim states */
+    .gh {
+      animation: ghostpulse 2.6s ease-in-out infinite alternate;
+    }
+    @keyframes ghostpulse {
+      from { fill: #4a3010; }
+      to   { fill: #201510; }
+    }
+  </style>
+
+  <!-- ═══════════════════════════════════════
+       PANEL 1 — FRESH  (x=30)
+       8 cols × 5 rows, cell 16×16, step 18
+  ═══════════════════════════════════════ -->
+  <rect x="30" y="8" width="168" height="112" rx="6" fill="#18160f"/>
+
+  <!-- Row 0 -->
+  <rect x="42" y="20" width="16" height="16" fill="#1d1912"/>
+  <rect x="60" y="20" width="16" height="16" fill="#1d1912"/>
+  <rect x="78" y="20" width="16" height="16" fill="#1d1912"/>
+  <rect x="96" y="20" width="16" height="16" fill="#1d1912"/>
+  <rect x="114" y="20" width="16" height="16" fill="#1d1912"/>
+  <rect x="132" y="20" width="16" height="16" fill="#1d1912"/>
+  <rect x="150" y="20" width="16" height="16" fill="#1d1912"/>
+  <rect x="168" y="20" width="16" height="16" fill="#1d1912"/>
+
+  <!-- Row 1 -->
+  <rect x="42" y="38" width="16" height="16" fill="#1d1912"/>
+  <rect x="60" y="38" width="16" height="16" fill="#1d1912"/>
+  <rect x="78" y="38" width="16" height="16" fill="#4a3218"/>
+  <rect x="96" y="38" width="16" height="16" fill="#4a3218"/>
+  <rect x="114" y="38" width="16" height="16" fill="#4a3218"/>
+  <rect x="132" y="38" width="16" height="16" fill="#4a3218"/>
+  <rect x="150" y="38" width="16" height="16" fill="#1d1912"/>
+  <rect x="168" y="38" width="16" height="16" fill="#1d1912"/>
+
+  <!-- Row 2 -->
+  <rect x="42" y="56" width="16" height="16" fill="#1d1912"/>
+  <rect x="60" y="56" width="16" height="16" fill="#4a3218"/>
+  <rect x="78" y="56" width="16" height="16" fill="#4a3218"/>
+  <rect x="96" y="56" width="16" height="16" fill="#8a5a28"/>
+  <rect x="114" y="56" width="16" height="16" fill="#8a5a28"/>
+  <rect x="132" y="56" width="16" height="16" fill="#4a3218"/>
+  <rect x="150" y="56" width="16" height="16" fill="#4a3218"/>
+  <rect x="168" y="56" width="16" height="16" fill="#1d1912"/>
+
+  <!-- Row 3 -->
+  <rect x="42" y="74" width="16" height="16" fill="#1d1912"/>
+  <rect x="60" y="74" width="16" height="16" fill="#4a3218"/>
+  <rect x="78" y="74" width="16" height="16" fill="#8a5a28"/>
+  <rect x="96" y="74" width="16" height="16" fill="#8a5a28"/>
+  <rect x="114" y="74" width="16" height="16" fill="#8a5a28"/>
+  <rect x="132" y="74" width="16" height="16" fill="#8a5a28"/>
+  <rect x="150" y="74" width="16" height="16" fill="#4a3218"/>
+  <rect x="168" y="74" width="16" height="16" fill="#1d1912"/>
+
+  <!-- Row 4 -->
+  <rect x="42" y="92" width="16" height="16" fill="#1d1912"/>
+  <rect x="60" y="92" width="16" height="16" fill="#1d1912"/>
+  <rect x="78" y="92" width="16" height="16" fill="#4a3218"/>
+  <rect x="96" y="92" width="16" height="16" fill="#4a3218"/>
+  <rect x="114" y="92" width="16" height="16" fill="#4a3218"/>
+  <rect x="132" y="92" width="16" height="16" fill="#4a3218"/>
+  <rect x="150" y="92" width="16" height="16" fill="#1d1912"/>
+  <rect x="168" y="92" width="16" height="16" fill="#1d1912"/>
+
+  <text x="114" y="135" class="lbl">FRESH</text>
+  <text x="114" y="148" class="sub-lbl">0 – 30%</text>
+
+  <!-- Arrow 1 -->
+  <line x1="201" y1="64" x2="210" y2="64" stroke="#3a3733" stroke-width="1.5"/>
+  <polygon points="207,60 213,64 207,68" class="arr"/>
+
+  <!-- ═══════════════════════════════════════
+       PANEL 2 — DECAYING  (x=216)
+       Edges noisy, center still clear
+  ═══════════════════════════════════════ -->
+  <rect x="216" y="8" width="168" height="112" rx="6" fill="#18160f"/>
+
+  <!-- Row 0 — all noise -->
+  <rect x="228" y="20" width="16" height="16" class="n1"/>
+  <rect x="246" y="20" width="16" height="16" class="n2"/>
+  <rect x="264" y="20" width="16" height="16" class="n3"/>
+  <rect x="282" y="20" width="16" height="16" class="n1"/>
+  <rect x="300" y="20" width="16" height="16" class="n2"/>
+  <rect x="318" y="20" width="16" height="16" class="n3"/>
+  <rect x="336" y="20" width="16" height="16" class="n1"/>
+  <rect x="354" y="20" width="16" height="16" class="n2"/>
+
+  <!-- Row 1 — edge noise, centre clear -->
+  <rect x="228" y="38" width="16" height="16" class="n3"/>
+  <rect x="246" y="38" width="16" height="16" class="n1"/>
+  <rect x="264" y="38" width="16" height="16" fill="#4a3218"/>
+  <rect x="282" y="38" width="16" height="16" fill="#4a3218"/>
+  <rect x="300" y="38" width="16" height="16" fill="#4a3218"/>
+  <rect x="318" y="38" width="16" height="16" fill="#4a3218"/>
+  <rect x="336" y="38" width="16" height="16" class="n2"/>
+  <rect x="354" y="38" width="16" height="16" class="n1"/>
+
+  <!-- Row 2 — edge noise, centre clear -->
+  <rect x="228" y="56" width="16" height="16" class="n2"/>
+  <rect x="246" y="56" width="16" height="16" fill="#4a3218"/>
+  <rect x="264" y="56" width="16" height="16" fill="#4a3218"/>
+  <rect x="282" y="56" width="16" height="16" fill="#8a5a28"/>
+  <rect x="300" y="56" width="16" height="16" fill="#8a5a28"/>
+  <rect x="318" y="56" width="16" height="16" fill="#4a3218"/>
+  <rect x="336" y="56" width="16" height="16" fill="#4a3218"/>
+  <rect x="354" y="56" width="16" height="16" class="n3"/>
+
+  <!-- Row 3 — edge noise, centre clear -->
+  <rect x="228" y="74" width="16" height="16" class="n1"/>
+  <rect x="246" y="74" width="16" height="16" fill="#4a3218"/>
+  <rect x="264" y="74" width="16" height="16" fill="#8a5a28"/>
+  <rect x="282" y="74" width="16" height="16" fill="#8a5a28"/>
+  <rect x="300" y="74" width="16" height="16" fill="#8a5a28"/>
+  <rect x="318" y="74" width="16" height="16" fill="#8a5a28"/>
+  <rect x="336" y="74" width="16" height="16" fill="#4a3218"/>
+  <rect x="354" y="74" width="16" height="16" class="n2"/>
+
+  <!-- Row 4 — all noise -->
+  <rect x="228" y="92" width="16" height="16" class="n3"/>
+  <rect x="246" y="92" width="16" height="16" class="n1"/>
+  <rect x="264" y="92" width="16" height="16" class="n2"/>
+  <rect x="282" y="92" width="16" height="16" class="n3"/>
+  <rect x="300" y="92" width="16" height="16" fill="#4a3218"/>
+  <rect x="318" y="92" width="16" height="16" class="n1"/>
+  <rect x="336" y="92" width="16" height="16" class="n2"/>
+  <rect x="354" y="92" width="16" height="16" class="n3"/>
+
+  <text x="300" y="135" class="lbl">DECAYING</text>
+  <text x="300" y="148" class="sub-lbl">30 – 70%</text>
+
+  <!-- Arrow 2 -->
+  <line x1="387" y1="64" x2="396" y2="64" stroke="#3a3733" stroke-width="1.5"/>
+  <polygon points="393,60 399,64 393,68" class="arr"/>
+
+  <!-- ═══════════════════════════════════════
+       PANEL 3 — DISSOLVED  (x=402)
+       All noise, only 4 center ghost cells remain
+  ═══════════════════════════════════════ -->
+  <rect x="402" y="8" width="168" height="112" rx="6" fill="#18160f"/>
+
+  <!-- Row 0 — all noise -->
+  <rect x="414" y="20" width="16" height="16" class="n1"/>
+  <rect x="432" y="20" width="16" height="16" class="n3"/>
+  <rect x="450" y="20" width="16" height="16" class="n2"/>
+  <rect x="468" y="20" width="16" height="16" class="n1"/>
+  <rect x="486" y="20" width="16" height="16" class="n3"/>
+  <rect x="504" y="20" width="16" height="16" class="n2"/>
+  <rect x="522" y="20" width="16" height="16" class="n1"/>
+  <rect x="540" y="20" width="16" height="16" class="n3"/>
+
+  <!-- Row 1 — all noise -->
+  <rect x="414" y="38" width="16" height="16" class="n2"/>
+  <rect x="432" y="38" width="16" height="16" class="n1"/>
+  <rect x="450" y="38" width="16" height="16" class="n3"/>
+  <rect x="468" y="38" width="16" height="16" class="n2"/>
+  <rect x="486" y="38" width="16" height="16" class="n1"/>
+  <rect x="504" y="38" width="16" height="16" class="n3"/>
+  <rect x="522" y="38" width="16" height="16" class="n2"/>
+  <rect x="540" y="38" width="16" height="16" class="n1"/>
+
+  <!-- Row 2 — noise + 2 ghost cells -->
+  <rect x="414" y="56" width="16" height="16" class="n3"/>
+  <rect x="432" y="56" width="16" height="16" class="n1"/>
+  <rect x="450" y="56" width="16" height="16" class="n2"/>
+  <rect x="468" y="56" width="16" height="16" class="gh"/>
+  <rect x="486" y="56" width="16" height="16" class="gh"/>
+  <rect x="504" y="56" width="16" height="16" class="n3"/>
+  <rect x="522" y="56" width="16" height="16" class="n1"/>
+  <rect x="540" y="56" width="16" height="16" class="n2"/>
+
+  <!-- Row 3 — noise + 2 ghost cells -->
+  <rect x="414" y="74" width="16" height="16" class="n1"/>
+  <rect x="432" y="74" width="16" height="16" class="n3"/>
+  <rect x="450" y="74" width="16" height="16" class="n2"/>
+  <rect x="468" y="74" width="16" height="16" class="gh"/>
+  <rect x="486" y="74" width="16" height="16" class="gh"/>
+  <rect x="504" y="74" width="16" height="16" class="n1"/>
+  <rect x="522" y="74" width="16" height="16" class="n3"/>
+  <rect x="540" y="74" width="16" height="16" class="n2"/>
+
+  <!-- Row 4 — all noise -->
+  <rect x="414" y="92" width="16" height="16" class="n2"/>
+  <rect x="432" y="92" width="16" height="16" class="n1"/>
+  <rect x="450" y="92" width="16" height="16" class="n3"/>
+  <rect x="468" y="92" width="16" height="16" class="n2"/>
+  <rect x="486" y="92" width="16" height="16" class="n1"/>
+  <rect x="504" y="92" width="16" height="16" class="n3"/>
+  <rect x="522" y="92" width="16" height="16" class="n2"/>
+  <rect x="540" y="92" width="16" height="16" class="n1"/>
+
+  <text x="486" y="135" class="lbl">DISSOLVED</text>
+  <text x="486" y="148" class="sub-lbl">70 – 100%</text>
+
+</svg>

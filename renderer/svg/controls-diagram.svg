@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 140" role="img" aria-label="Controls diagram showing decay rate slider, audio toggle, and info button with annotations">
+
+  <style>
+    text {
+      font-family: 'Azeret Mono', monospace;
+    }
+    .label-key {
+      font-family: 'Archivo Narrow', 'Arial Narrow', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      fill: #8a5a28;
+      text-anchor: start;
+    }
+    .label-desc {
+      font-size: 9px;
+      letter-spacing: 0.06em;
+      fill: #58554f;
+      text-anchor: start;
+    }
+    .ctrl-label {
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      fill: #58554f;
+      text-anchor: middle;
+    }
+    .tick-line { stroke: #38362f; stroke-width: 1; }
+    .annot-line { stroke: #38362f; stroke-width: 1; stroke-dasharray: 3 3; }
+
+    /* Thumb pulse on slider */
+    .slider-thumb {
+      animation: thumbPulse 2s ease-in-out infinite alternate;
+    }
+    @keyframes thumbPulse {
+      from { r: 6; filter: drop-shadow(0 0 3px #8a5a28); }
+      to   { r: 7; filter: drop-shadow(0 0 8px #8a5a28); }
+    }
+
+    /* Audio active glow */
+    .audio-active {
+      animation: audioPulse 1.4s ease-in-out infinite alternate;
+    }
+    @keyframes audioPulse {
+      from { opacity: 0.6; }
+      to   { opacity: 1; }
+    }
+  </style>
+
+  <!-- ════════════════════════════════
+       The control bar chrome
+  ════════════════════════════════ -->
+  <rect x="30" y="44" width="360" height="50" rx="8" fill="#19170f" stroke="#2a2825" stroke-width="1"/>
+
+  <!-- Left hint text -->
+  <text x="46" y="73" font-size="9" letter-spacing="0.06" fill="#3a3835" font-style="italic" font-family="'Azeret Mono', monospace">stillness decays · movement restores</text>
+
+  <!-- ── Decay Rate slider ── -->
+  <!-- Track -->
+  <rect x="200" y="67" width="100" height="2" rx="1" fill="#2e2c28"/>
+  <!-- Fill (left of thumb) -->
+  <rect x="200" y="67" width="52" height="2" rx="1" fill="#5a3c18"/>
+  <!-- Thumb -->
+  <circle cx="252" cy="68" r="6" fill="#8a5a28" class="slider-thumb"/>
+
+  <!-- Slider labels above -->
+  <text x="202" y="60" class="ctrl-label">SLOW</text>
+  <text x="298" y="60" class="ctrl-label">FAST</text>
+  <text x="250" y="56" class="ctrl-label" fill="#6a4520" letter-spacing="0.2em">DECAY RATE</text>
+
+  <!-- ── Audio toggle pill ── -->
+  <rect x="316" y="60" width="42" height="18" rx="9" fill="#1e1c17" stroke="#3a3835" stroke-width="1"/>
+  <text x="337" y="73" font-size="8" letter-spacing="0.16em" fill="#6a4520" font-family="'Azeret Mono', monospace" text-anchor="middle" class="audio-active">AUDIO</text>
+
+  <!-- ── Info button ── -->
+  <circle cx="376" cy="69" r="10" fill="none" stroke="#3a3835" stroke-width="1"/>
+  <text x="376" y="73" font-size="10" fill="#58554f" font-family="'Azeret Mono', monospace" text-anchor="middle">?</text>
+
+  <!-- ════════════════════════════════
+       Annotation callouts
+  ════════════════════════════════ -->
+
+  <!-- Callout: Decay Rate -->
+  <line x1="250" y1="44" x2="250" y2="20" class="annot-line"/>
+  <text x="250" y="15" class="label-key" text-anchor="middle">DECAY RATE</text>
+  <text x="250" y="6"  class="label-desc" text-anchor="middle">how fast stillness triggers decay</text>
+
+  <!-- Callout: Audio -->
+  <line x1="337" y1="78" x2="337" y2="110" class="annot-line"/>
+  <line x1="337" y1="110" x2="400" y2="110" class="annot-line"/>
+  <text x="402" y="114" class="label-key" text-anchor="start">AUDIO</text>
+  <text x="402" y="125" class="label-desc" text-anchor="start">generative ambient drone</text>
+
+  <!-- Callout: Info -->
+  <line x1="376" y1="79" x2="376" y2="125" class="annot-line"/>
+  <line x1="376" y1="125" x2="432" y2="125" class="annot-line"/>
+  <text x="434" y="129" class="label-key" text-anchor="start">?  HELP</text>
+  <text x="434" y="140" class="label-desc" text-anchor="start">this panel · press Esc to close</text>
+
+  <!-- HUD annotation (top right corner indicator) -->
+  <rect x="30" y="4" width="92" height="28" rx="5" fill="#19170f" stroke="#2a2825" stroke-width="1"/>
+  <text x="72" y="14" font-size="8" letter-spacing="0.14" fill="#3a3835" font-family="'Azeret Mono', monospace" text-anchor="middle">DECAYED</text>
+  <text x="72" y="26" font-size="13" font-weight="500" fill="#6a6560" font-family="'Azeret Mono', monospace" text-anchor="middle">47%</text>
+  <line x1="76" y1="32" x2="76" y2="44" class="annot-line"/>
+  <text x="76" y="42" class="label-desc" text-anchor="middle">live HUD readout</text>
+
+</svg>
