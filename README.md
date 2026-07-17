@@ -25,7 +25,17 @@ An interactive digital art installation that explores the relationship between m
 
 <br>
 
-## Installation & Setup
+## Quick Start (For Judges & Users)
+
+1. Go to the [Releases page](https://github.com/Krshs90/Ephemera/releases/tag/v1.0.0).
+2. Scroll to the bottom and click **Assets**.
+3. Download **`Ephemera.zip`** (approx 109MB).
+4. Right-click the downloaded zip file and select **Extract All...**
+5. Open the newly extracted folder and double-click **`Ephemera.exe`** to run the app instantly!
+
+<br>
+
+## Developer Installation
 
 1. Clone this repository.
 2. Navigate into the project directory:
