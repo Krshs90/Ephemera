@@ -1,18 +1,15 @@
-/**
- * Ephemera -- App Shell
- */
 
 let _mp3  = null;
 let _ai   = null;
 let _activeInput = 'camera';
 
 (function () {
-  // Window controls
+  
   document.getElementById('btn-minimize').addEventListener('click', () => window.electronAPI?.minimize());
   document.getElementById('btn-maximize').addEventListener('click', () => window.electronAPI?.maximize());
   document.getElementById('btn-close').addEventListener('click',    () => window.electronAPI?.close());
 
-  // Session timer
+  
   const sessionEl = document.getElementById('hud-session-time');
   const startTime = Date.now();
   setInterval(() => {
@@ -22,7 +19,7 @@ let _activeInput = 'camera';
       String(e % 60).padStart(2, '0');
   }, 1000);
 
-  // Global Decay Speed (moved to settings)
+  
   const decaySlider = document.getElementById('global-decay-slider');
   if (decaySlider) {
     decaySlider.addEventListener('input', () => {
@@ -31,7 +28,7 @@ let _activeInput = 'camera';
     });
   }
 
-  // Universal Style Picker
+  
   const styleSelect = document.getElementById('style-select');
   if (styleSelect) {
     styleSelect.addEventListener('change', (e) => {
@@ -39,14 +36,14 @@ let _activeInput = 'camera';
     });
   }
 
-  // Header Mode Buttons
+  
   document.querySelectorAll('.header-mode-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       _switchInputUI(btn.dataset.input);
     });
   });
 
-  // AI Shield (Camera context)
+  
   const aiBtn = document.getElementById('ai-shield-btn');
   if (aiBtn) {
     aiBtn.addEventListener('click', () => {
@@ -68,7 +65,7 @@ let _activeInput = 'camera';
     });
   }
 
-  // Mic Vol Slider (Silence Floor)
+  
   const micSlider = document.getElementById('mic-vol-slider');
   if (micSlider) {
     micSlider.addEventListener('input', e => {
@@ -76,7 +73,7 @@ let _activeInput = 'camera';
     });
   }
 
-  // MP3 file input (Fixed overlay hiding)
+  
   const mp3Input = document.getElementById('mp3-file-input');
   if (mp3Input) {
     mp3Input.addEventListener('change', async (e) => {
@@ -88,8 +85,8 @@ let _activeInput = 'camera';
       }
       const ok = await _mp3.loadFile(file);
       if (ok) {
-        // Do NOT autoplay. 
-        // Hide the upload screen so canvas is visible.
+        
+        
         const mp3Area = document.getElementById('mp3-upload-area');
         if (mp3Area) mp3Area.style.display = 'none';
         
@@ -98,7 +95,7 @@ let _activeInput = 'camera';
     });
   }
 
-  // MP3 Play/Pause toggle
+  
   const mp3PlayBtn = document.getElementById('mp3-play-btn');
   if (mp3PlayBtn) {
     mp3PlayBtn.addEventListener('click', () => {
@@ -113,7 +110,7 @@ let _activeInput = 'camera';
     });
   }
 
-  // MP3 Volume
+  
   const mp3VolSlider = document.getElementById('mp3-vol-slider');
   if (mp3VolSlider) {
     mp3VolSlider.addEventListener('input', e => {
@@ -121,7 +118,7 @@ let _activeInput = 'camera';
     });
   }
 
-  // Image file input (Fixed overlay hiding)
+  
   const imgInput = document.getElementById('image-file-input');
   if (imgInput) {
     imgInput.addEventListener('change', (e) => {
@@ -132,7 +129,7 @@ let _activeInput = 'camera';
       img.onload = () => {
         window.ephemeraSketch?.setImageSource(img);
         URL.revokeObjectURL(url);
-        // Hide the upload screen so canvas is visible.
+        
         const imgArea = document.getElementById('image-upload-area');
         if (imgArea) imgArea.style.display = 'none';
       };
@@ -140,7 +137,7 @@ let _activeInput = 'camera';
     });
   }
 
-  // Image brush size slider
+  
   const imgBrushSlider = document.getElementById('img-brush-slider');
   if (imgBrushSlider) {
     imgBrushSlider.addEventListener('input', e => {
@@ -148,7 +145,7 @@ let _activeInput = 'camera';
     });
   }
 
-  // Universal toggle buttons
+  
   const heatBtn = document.getElementById('heatmap-toggle');
   if (heatBtn) {
     heatBtn.addEventListener('click', () => {
@@ -172,7 +169,7 @@ let _activeInput = 'camera';
     });
   }
 
-  // Settings / Info Panels
+  
   const settingsOverlay = document.getElementById('settings-overlay');
   const infoOverlay     = document.getElementById('info-overlay');
   
@@ -221,12 +218,12 @@ let _activeInput = 'camera';
     }
   });
 
-  // Info Tabs
+  
   document.querySelectorAll('.info-tab-btn').forEach(btn => {
     btn.addEventListener('click', () => _switchInfoTab(btn.dataset.tab));
   });
 
-  // Settings Res / Options
+  
   const resBtns = document.querySelectorAll('.res-btn');
   resBtns.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -246,7 +243,7 @@ let _activeInput = 'camera';
     });
   }
 
-  // Camera Settings mapping
+  
   document.getElementById('recovery-slider')?.addEventListener('input', e => {
     window.ephemeraSketch?.setOption('recoverySpeed', parseInt(e.target.value, 10));
   });
@@ -256,22 +253,19 @@ let _activeInput = 'camera';
 
 })();
 
-/* ------------------------------------------------------------------ */
-/*  Input Mode Switcher & Context Controls                               */
-/* ------------------------------------------------------------------ */
 function _switchInputUI(mode) {
   _activeInput = mode;
 
-  // Header active state
+  
   document.querySelectorAll('.header-mode-btn').forEach(b => {
     b.classList.toggle('is-active', b.dataset.input === mode);
   });
 
-  // Show contextual controls in bottom bar
+  
   document.querySelectorAll('.context-group').forEach(grp => {
     if (grp.id === `context-${mode}`) {
       grp.style.display = 'flex';
-      // tiny reflow delay to trigger fade animation
+      
       requestAnimationFrame(() => requestAnimationFrame(() => grp.classList.add('is-active')));
     } else {
       grp.classList.remove('is-active');
@@ -279,12 +273,12 @@ function _switchInputUI(mode) {
     }
   });
 
-  // Show/hide upload areas
+  
   const mp3Area = document.getElementById('mp3-upload-area');
   const imgArea = document.getElementById('image-upload-area');
   const camPH   = document.getElementById('camera-placeholder');
 
-  // Only show the upload prompt if NO file is loaded for that mode yet
+  
   if (mp3Area) mp3Area.style.display = (mode === 'mp3' && (!_mp3 || !_mp3.buffer)) ? 'flex' : 'none';
   if (imgArea) imgArea.style.display = (mode === 'image' && !window.ephemeraSketch?.isImageReady()) ? 'flex' : 'none';
 
@@ -296,13 +290,13 @@ function _switchInputUI(mode) {
     }
   }
 
-  // Hide drone toggle in MP3/Image mode
+  
   const droneBtn = document.getElementById('audio-toggle');
   if (droneBtn) {
     droneBtn.style.display = (mode === 'mp3' || mode === 'image') ? 'none' : 'flex';
   }
 
-  // Default image to HD resolution
+  
   if (mode === 'image') {
     document.querySelectorAll('.res-btn').forEach(b => {
       b.classList.toggle('is-active', b.dataset.val === '5');
@@ -315,11 +309,11 @@ function _switchInputUI(mode) {
     window.ephemeraSketch?.setOption('cellSize', 10);
   }
 
-  // HUD Label
+  
   const modeLabel = document.getElementById('hud-mode-label');
   if (modeLabel) modeLabel.textContent = mode.toUpperCase();
 
-  // Switch sketch engine
+  
   window.ephemeraSketch?.setInputMode(mode);
 }
 

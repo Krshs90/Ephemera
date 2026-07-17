@@ -12,7 +12,7 @@
 </head>
 <body>
 
-  <!-- CUSTOM TITLE BAR -->
+  
   <header id="titlebar" class="titlebar">
     <div class="titlebar-drag">
       <span class="app-wordmark">Ephemera</span>
@@ -37,7 +37,7 @@
     </div>
   </header>
 
-  <!-- MAIN CANVAS AREA -->
+  
   <main id="canvas-container" class="canvas-container">
     <div id="camera-placeholder" class="camera-placeholder">
       <div class="placeholder-inner">
@@ -51,7 +51,7 @@
       </div>
     </div>
 
-    <!-- MP3 upload area -->
+    
     <div id="mp3-upload-area" class="upload-area" style="display:none;">
       <div class="upload-inner">
         <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
@@ -69,7 +69,7 @@
       </div>
     </div>
 
-    <!-- Image upload area -->
+    
     <div id="image-upload-area" class="upload-area" style="display:none;">
       <div class="upload-inner">
         <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
@@ -84,7 +84,7 @@
       </div>
     </div>
 
-    <!-- HUD -->
+    
     <div id="hud" class="hud" aria-live="polite" aria-label="Session status">
       <div class="hud-item">
         <span class="hud-label">Mode</span>
@@ -108,11 +108,11 @@
     </div>
   </main>
 
-  <!-- BOTTOM CONTROL PANEL -->
+  
   <footer id="control-panel" class="control-panel">
     
     <div class="cp-left">
-      <!-- Universal Style Picker -->
+      
       <div class="cp-control">
         <label class="cp-label">Style</label>
         <div class="custom-select-wrap">
@@ -131,10 +131,10 @@
       </div>
     </div>
 
-    <!-- Contextual Center Area -->
+    
     <div class="cp-center" id="cp-dynamic-area">
       
-      <!-- Camera Controls -->
+      
       <div id="context-camera" class="context-group is-active">
         <button id="ai-shield-btn" class="cp-pill-btn" data-active="false" aria-pressed="false" title="Auto-protect your silhouette">
           <span class="pill-icon">
@@ -144,7 +144,7 @@
         <span class="cp-hint">stillness decays, movement restores</span>
       </div>
 
-      <!-- MP3 Controls -->
+      
       <div id="context-mp3" class="context-group" style="display:none;">
         <button id="mp3-play-btn" class="cp-pill-btn" data-playing="false" style="color:var(--accent);border-color:var(--accent);margin-right:12px;">
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><polygon points="2,1 11,6 2,11" fill="currentColor"/></svg> Play Audio
@@ -156,7 +156,7 @@
         <span class="cp-hint">hover waves to restore frequencies</span>
       </div>
 
-      <!-- Image Controls -->
+      
       <div id="context-image" class="context-group" style="display:none;">
         <button class="cp-pill-btn" onclick="document.getElementById('image-file-input').click()" title="Choose a new image" style="margin-right:12px;">
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 2V10M2 6H10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg> Change Image
@@ -170,7 +170,7 @@
 
     </div>
 
-    <!-- Right Universal Actions -->
+    
     <div class="cp-right">
       <button id="crystallize-btn" class="cp-pill-btn crystal-btn" title="Save a decay portrait (Space)" aria-label="Crystallize">
         <span class="pill-icon">
@@ -204,7 +204,7 @@
     </div>
   </footer>
 
-  <!-- SETTINGS PANEL -->
+  
   <div id="settings-overlay" class="info-overlay settings-overlay" aria-modal="true" role="dialog" aria-label="Advanced Settings" hidden>
     <div class="info-panel settings-panel" id="settings-panel">
       <button id="settings-close" class="info-close-btn" aria-label="Close settings"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><line x1="1" y1="1" x2="12" y2="12" stroke="currentColor" stroke-width="1.5"/><line x1="12" y1="1" x2="1" y2="12" stroke="currentColor" stroke-width="1.5"/></svg></button>
@@ -266,7 +266,7 @@
     </div>
   </div>
 
-  <!-- INFO / HELP PANEL -->
+  
   <div id="info-overlay" class="info-overlay" aria-modal="true" role="dialog" aria-label="How Ephemera works" hidden>
     <div class="info-panel" id="info-panel">
       <button id="info-close" class="info-close-btn" aria-label="Close info panel"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><line x1="1" y1="1" x2="12" y2="12" stroke="currentColor" stroke-width="1.5"/><line x1="12" y1="1" x2="1" y2="12" stroke="currentColor" stroke-width="1.5"/></svg></button>
@@ -307,7 +307,7 @@
           </section>
         </div>
 
-        <!-- About tab with GitHub Link -->
+        
         <div class="info-tab-pane" data-pane="about" hidden>
           <section class="info-section">
             <h2 class="info-section-title">The Concept</h2>

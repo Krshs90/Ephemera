@@ -9,7 +9,7 @@ html = html.replace(regex, (match, name) => {
   const svgPath = path.join(__dirname, '..', 'renderer', 'svg', name + '.svg');
   let svgContent = fs.readFileSync(svgPath, 'utf8');
   
-  // Add width 100% height auto to svg root
+  
   svgContent = svgContent.replace(/<svg\s/, '<svg style="width:100%;height:auto;" ');
   
   return svgContent;

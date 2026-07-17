@@ -1,18 +1,4 @@
-/**
- * Ephemera -- Core Decay Engine (p5.js)
- *
- * INPUT MODES
- *   camera  Live webcam via getUserMedia (pixel grid)
- *   mp3     Uploaded audio file (4-band oscilloscope rows)
- *   image   Uploaded image (pixel grid, heavily cached)
- *
- * VISUAL STYLES (decay rendering)
- *   glitch, ember, phantom, liquid, ascii, wireframe, dust, vhs
- */
 
-/* ------------------------------------------------------------------ */
-/*  Runtime Options                                                      */
-/* ------------------------------------------------------------------ */
 let opts = {
   inputMode:         'camera',
   mode:              'glitch',
@@ -30,9 +16,6 @@ let opts = {
 
 let DECAY_ONSET = 150;
 
-/* ------------------------------------------------------------------ */
-/*  State                                                                */
-/* ------------------------------------------------------------------ */
 let cols, rows;
 let cells       = [];
 let histLayers  = [];
@@ -43,12 +26,10 @@ let crystalCount = 0;
 let bgCv = null;
 let bgCtx = null;
 
-/* Camera */
 let videoEl  = null;
 let camReady = false;
 let camRetry = null;
 
-/* MP3 */
 let mp3Engine = null;
 let mp3Bands  = [
   { decay: 0, timer: 0, hover: false },
@@ -57,24 +38,18 @@ let mp3Bands  = [
   { decay: 0, timer: 0, hover: false }
 ];
 
-/* Image */
 let imgOffCv  = null;
 let imgOffCtx = null;
 let imgReady  = false;
-let imgCached = false; // flag to only read pixels once
+let imgCached = false; 
 
-/* AI shield */
 let aiShield = null;
 
-/* Mouse */
 let mouseCell = { c: -1, r: -1 };
 let rawMouseX = -1, rawMouseY = -1;
 
 const asciiChars = '01#@$%&?+*=-:. ';
 
-/* ------------------------------------------------------------------ */
-/*  Public API                                                           */
-/* ------------------------------------------------------------------ */
 window.ephemeraSketch = {
   setDecayOnset(v)      { DECAY_ONSET = v; },
   setOption(key, val) {
@@ -83,7 +58,7 @@ window.ephemeraSketch = {
       window._ephemeraInitGrid();
       histLayers = [];
     }
-    if (key === 'mode') histLayers = []; // Clear burn-in when style changes
+    if (key === 'mode') histLayers = []; 
     if (key === 'historyEnabled' && !val) histLayers = [];
     if (key === 'inputMode') _switchInputMode(val);
   },
@@ -106,9 +81,6 @@ window.ephemeraSketch = {
   getCrystalCount() { return crystalCount; },
 };
 
-/* ------------------------------------------------------------------ */
-/*  Input Mode Switching                                                 */
-/* ------------------------------------------------------------------ */
 function _switchInputMode(mode) {
   opts.inputMode = mode;
   if (mode !== 'mp3' && mp3Engine) {
@@ -119,9 +91,6 @@ function _switchInputMode(mode) {
   if (typeof window._ephemeraInitGrid === 'function') window._ephemeraInitGrid();
 }
 
-/* ------------------------------------------------------------------ */
-/*  Camera                                                               */
-/* ------------------------------------------------------------------ */
 function _startCamera() {
   if (videoEl) { try { videoEl.srcObject?.getTracks().forEach(t => t.stop()); } catch(_) {} videoEl = null; }
   camReady = false;
@@ -149,9 +118,6 @@ function _startCamera() {
     });
 }
 
-/* ------------------------------------------------------------------ */
-/*  Crystallize                                                           */
-/* ------------------------------------------------------------------ */
 function _crystallize() {
   const cnvEl = document.querySelector('#canvas-container canvas');
   if (!cnvEl) return;
@@ -173,9 +139,6 @@ function _crystallize() {
 }
 window._crystallize = _crystallize;
 
-/* ------------------------------------------------------------------ */
-/*  Grid                                                                 */
-/* ------------------------------------------------------------------ */
 function initGrid(p) {
   cols = Math.floor(p.width / opts.cellSize);
   rows = Math.floor(p.height / opts.cellSize);
@@ -196,9 +159,6 @@ function initGrid(p) {
 window._ephemeraInitGrid = () => { if (_p) initGrid(_p); };
 let _p = null;
 
-/* ------------------------------------------------------------------ */
-/*  p5 Sketch                                                            */
-/* ------------------------------------------------------------------ */
 new p5(function(p) {
   _p = p;
 
@@ -239,13 +199,13 @@ new p5(function(p) {
     noiseOff += 0.008;
     const mode = opts.inputMode;
 
-    // -- MP3 MODE (Custom Oscilloscope Renderer) --
+    
     if (mode === 'mp3') {
       _drawMp3Oscilloscopes(p);
-      return; // Skip grid loop completely
+      return; 
     }
 
-    // -- GRID RENDERER (Camera, Image) --
+    
     let camData = null;
     
     if (mode === 'camera' && camReady && videoEl) {
@@ -257,7 +217,7 @@ new p5(function(p) {
       
       camData = bgCtx.getImageData(0, 0, cols, rows).data;
       
-      // Draw pixelated background native fast path
+      
       p.drawingContext.imageSmoothingEnabled = false;
       p.drawingContext.drawImage(bgCv, 0, 0, p.width, p.height);
     }
@@ -272,7 +232,7 @@ new p5(function(p) {
           for (let c = 0; c < cols; c++) {
             const idx = (r * cols + c) * 4;
             cells[r][c].prev = [imgData[idx], imgData[idx+1], imgData[idx+2]];
-            cells[r][c].timer = 0; // pristine start
+            cells[r][c].timer = 0; 
           }
         }
         imgCached = true;
@@ -287,7 +247,7 @@ new p5(function(p) {
       for (let c = 0; c < cols; c++) {
         const cell = cells[r][c];
         
-        // Physics logic (Ember spread, Glitch swap, Liquid drip, Dust blow)
+        
         if (opts.mode === 'ember' && cell.decay > 0.8 && p.random() < 0.05) {
           const dr = p.random([-1, 0, 1]); const dc = p.random([-1, 0, 1]);
           if (cells[r+dr]?.[c+dc]) cells[r+dr][c+dc].timer += DECAY_ONSET * 0.1; 
@@ -311,7 +271,7 @@ new p5(function(p) {
           const dr = sourceColor[0] - cell.prev[0], dg = sourceColor[1] - cell.prev[1], db = sourceColor[2] - cell.prev[2];
           motionDist = Math.sqrt(dr*dr + dg*dg + db*db);
         } else if (mode === 'image' && imgReady) {
-          // Optimized brush logic - only run math if near mouse
+          
           if (mouseCell.c >= 0 && Math.abs(c - mouseCell.c) <= opts.brushRadius && Math.abs(r - mouseCell.r) <= opts.brushRadius) {
             const dc = c - mouseCell.c, dr2 = r - mouseCell.r, d2 = Math.sqrt(dc*dc + dr2*dr2);
             motionDist = d2 <= opts.brushRadius ? (opts.brushRadius - d2) * 40 : 0;
@@ -322,14 +282,14 @@ new p5(function(p) {
           motionDist = Math.max(motionDist, opts.movementThreshold + 1);
         }
 
-        // Decay increment
+        
         const decaySpeed = (mode === 'image') ? 0.3 : 0.4;
         
         if (motionDist < opts.movementThreshold) {
           cell.timer = Math.min(cell.timer + decaySpeed, DECAY_ONSET * 1.5);
         } else {
           cell.timer = Math.max(0, cell.timer - opts.recoverySpeed);
-          // Brush sweeping clears neighbours
+          
           if (opts.brushRadius > 1 && motionDist > opts.movementThreshold && (mode === 'image' || mode === 'camera')) {
             for (let dr = -opts.brushRadius; dr <= opts.brushRadius; dr++) {
               for (let dc = -opts.brushRadius; dc <= opts.brushRadius; dc++) {
@@ -346,17 +306,17 @@ new p5(function(p) {
           }
         }
 
-        if (mode === 'camera') cell.prev = sourceColor; // Update tracking for camera motion
+        if (mode === 'camera') cell.prev = sourceColor; 
 
         cell.motion = motionDist;
         cell.decay  = Math.min(cell.timer / DECAY_ONSET, 1.0);
         if (cell.decay > 0.5) totalDecayed++;
 
-        // Render
+        
         const x = c * opts.cellSize, y = r * opts.cellSize, sz = opts.cellSize - 1;
         const [sr, sg, sb] = cell.prev;
 
-        // Massive performance optimization: don't draw pristine cells if background is already there
+        
         if (cell.decay > 0.05) {
           if (opts.mode === 'ember')         _drawEmber(p, cell, x, y, sz, sr, sg, sb);
           else if (opts.mode === 'phantom')  _drawPhantom(p, cell, x, y, sz, sr, sg, sb);
@@ -368,13 +328,13 @@ new p5(function(p) {
           else                               _drawGlitch(p, cell, x, y, sz, sr, sg, sb);
         }
 
-        // Heatmap
+        
         if (opts.heatmapVisible && cell.motion > opts.movementThreshold) {
           const heat = Math.min((cell.motion - opts.movementThreshold) / 60, 1);
           p.fill(255, 80 + heat * 120, 0, heat * 80);
           p.rect(x, y, sz, sz);
         }
-        // AI shield glow
+        
         if (aiShield?.isActive && mode === 'camera' && aiShield.isProtected(c, r, cols, rows) && cell.decay < 0.15) {
           p.fill(100, 200, 255, 22);
           p.rect(x, y, sz, sz);
@@ -403,9 +363,6 @@ new p5(function(p) {
   };
 });
 
-/* ------------------------------------------------------------------ */
-/*  MP3 Oscilloscope Renderer                                            */
-/* ------------------------------------------------------------------ */
 function _drawMp3Oscilloscopes(p) {
   const isPlaying = mp3Engine?.isPlaying;
   const waves = mp3Engine?.getWaveformData();
@@ -417,7 +374,7 @@ function _drawMp3Oscilloscopes(p) {
     const b = mp3Bands[i];
     const yCenter = i * bandHeight + bandHeight / 2;
     
-    // Hover logic
+    
     if (rawMouseY > i * bandHeight && rawMouseY < (i + 1) * bandHeight) {
       b.hover = true;
       b.timer = Math.max(0, b.timer - opts.recoverySpeed * 0.5);
@@ -429,11 +386,11 @@ function _drawMp3Oscilloscopes(p) {
     b.decay = Math.min(b.timer / DECAY_ONSET, 1.0);
     totalDecayed += b.decay;
 
-    // Draw background zone
+    
     p.fill(20, 19, 16, 50);
     p.rect(0, i * bandHeight, p.width, bandHeight);
 
-    // Draw wave
+    
     p.noFill();
     const thickness = p.map(b.decay, 0, 1, 2, 8);
     const waveColor = p.lerpColor(p.color(180, 220, 255), p.color(50, 40, 30), b.decay);
@@ -479,9 +436,6 @@ function _drawMp3Oscilloscopes(p) {
   if (typeof updateHUD === 'function') updateHUD(pct);
 }
 
-/* ------------------------------------------------------------------ */
-/*  Decay Style Renderers                                                */
-/* ------------------------------------------------------------------ */
 function _drawGlitch(p, cell, x, y, sz, cr, cg, cb) {
   const d = cell.decay;
   if (d < 0.25) return;

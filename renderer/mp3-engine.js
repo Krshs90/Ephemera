@@ -1,15 +1,3 @@
-/**
- * Ephemera -- MP3 Decay Engine
- *
- * Loads an audio file, plays it, and degrades it in 4 independent
- * frequency bands based on the decay level of each grid region.
- *
- * Band map (left to right in the grid):
- *   0: Sub-bass  < 80 Hz
- *   1: Low-mid   80-500 Hz
- *   2: High-mid  500-4000 Hz
- *   3: Air       4000+ Hz
- */
 
 class Mp3Engine {
   constructor() {
@@ -21,7 +9,7 @@ class Mp3Engine {
     this.masterGain  = null;
     this.noiseSource = null;
     this.noiseGain   = null;
-    this.bandNodes   = [];   // [{ highpass, lowpass, distortion, gain }]
+    this.bandNodes   = [];   
     this.isPlaying   = false;
     this.startedAt   = 0;
     this.pausedAt    = 0;
@@ -63,16 +51,16 @@ class Mp3Engine {
     if (!this.ctx || !this.buffer) return;
     this._teardown();
 
-    // Master output
+    
     this.masterGain = this.ctx.createGain();
     this.masterGain.gain.value = this.baseVolume;
 
-    // Analyser for visualisation
+    
     this.analyser = this.ctx.createAnalyser();
     this.analyser.fftSize = 1024;
     this.freqData = new Uint8Array(this.analyser.frequencyBinCount);
 
-    // Noise buffer for degradation layer
+    
     const noiseLen = this.ctx.sampleRate * 2;
     const noiseBuf = this.ctx.createBuffer(1, noiseLen, this.ctx.sampleRate);
     const nd = noiseBuf.getChannelData(0);
@@ -88,7 +76,7 @@ class Mp3Engine {
     this.noiseGain.connect(this.masterGain);
     this.noiseSource.start();
 
-    // 4-band split: each band is highpass + lowpass sandwich
+    
     const bands = [
       { lo: 20,   hi: 80   },
       { lo: 80,   hi: 500  },
@@ -213,11 +201,7 @@ class Mp3Engine {
     return (this.ctx.currentTime - this.startedAt) % (this.duration || 1);
   }
 
-  /**
-   * bandDecayLevels: Float32Array or Array of 4 values 0..1
-   * 0 = pristine, 1 = fully decayed
-   */
-  updateDegradation(bandDecayLevels) {
+    updateDegradation(bandDecayLevels) {
     if (!this.ctx || !this.bandNodes.length) return;
     const now = this.ctx.currentTime;
     let totalDecay = 0;
@@ -228,25 +212,25 @@ class Mp3Engine {
       b.decay = decay;
       totalDecay += decay;
 
-      // Distortion rises with decay squared
+      
       b.dist.curve = this._distCurve(decay * decay * 320);
 
-      // Gain drops as signal is "eaten" by noise
+      
       const targetGain = Math.max(0.04, 1 - decay * 0.88);
       b.gain.gain.setTargetAtTime(targetGain, now, 0.15);
 
-      // Low-pass filter descends: highs disappear first within each band
+      
       const targetFreq = Math.max(b._origHi * 0.12, b._origHi * (1 - decay * 0.72));
       b.lp.frequency.setTargetAtTime(targetFreq, now, 0.4);
     });
 
-    // Noise inversely proportional to average cleanliness
+    
     const avgDecay = totalDecay / Math.max(1, bandDecayLevels.length);
     if (this.noiseGain) {
       this.noiseGain.gain.setTargetAtTime(avgDecay * 0.45, now, 0.25);
     }
     if (this.masterGain) {
-      // Slight master duck so noise doesn't clip
+      
       this.masterGain.gain.setTargetAtTime(this.baseVolume - avgDecay * (this.baseVolume * 0.2), now, 0.3);
     }
   }

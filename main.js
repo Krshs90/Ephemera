@@ -17,13 +17,13 @@ function createWindow() {
       preload: path.join(__dirname, 'preload.js'),
       contextIsolation: true,
       nodeIntegration: false,
-      webSecurity: false, // allow CDN scripts in renderer
+      webSecurity: false, 
     },
     icon: path.join(__dirname, 'assets', 'Ephemera Logo.png'),
     show: false,
   });
 
-  // Grant webcam permission automatically for the renderer
+  
   session.defaultSession.setPermissionRequestHandler((webContents, permission, callback) => {
     if (permission === 'media') {
       callback(true);
@@ -50,7 +50,7 @@ function createWindow() {
   });
 }
 
-// Window control IPC handlers
+
 ipcMain.on('window-minimize', () => {
   if (mainWindow) mainWindow.minimize();
 });
