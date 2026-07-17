@@ -57,6 +57,8 @@ An interactive digital art installation that explores the relationship between m
 * **MP3**: Hover your cursor horizontally across the 4 frequency rows to restore audio fidelity.
 * **Image**: Click and drag your mouse to sweep away visual rot.
 * **Spacebar**: Instantly crystallizes (downloads) a snapshot of the current canvas state.
+* **Help & Info**: Click the info (i) button in the header for mode specific tutorials.
+* **Advanced Settings**: Click the gear button in the header to tweak physics thresholds, brush sizes, and decay rates.
 
 ## Credits
 
